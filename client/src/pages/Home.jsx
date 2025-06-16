@@ -62,6 +62,11 @@ const CardWrapper = styled.div`
 
 
 const Home = () => {
+    const item ={
+        photo: "https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832_1280.jpg",
+        author: "Noddy",
+        prompt: "Hey there!",
+    }
   return (
     <Container>
         <Headline>Explore popular posts in the community!
@@ -73,11 +78,13 @@ const Home = () => {
 
         <Wrapper>
             <CardWrapper>
+            <ImageCard 
+                item={item}
+            />
+            {/* <ImageCard/>
             <ImageCard/>
             <ImageCard/>
-            <ImageCard/>
-            <ImageCard/>
-            <ImageCard/>
+            <ImageCard/> */}
 
             </CardWrapper>
         </Wrapper>
