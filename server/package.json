@@ -7,7 +7,7 @@
   "scripts": {
     "start": "nodemon index.js"
   },
-  "author": "Server",
+  "author": "BubblesAI",
   "license": "ISC",
   "dependencies": {
     "cloudinary": "^2.0.0",
