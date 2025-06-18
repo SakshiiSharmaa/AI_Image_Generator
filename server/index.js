@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import * as dotenv from "dotenv";
 import express from "express";
 import PostRouter from "./routes/Posts.js";
+import GenerateImageRouter from "./routes/GenerateImage.js"
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.use((err, req, res, next) => {
 });
 
 app.use("/api/post", PostRouter);
+app.use("/api/generateImage", GenerateImageRouter);
 
 //Default GET
 app.get("/", async (req, res) => {
@@ -36,22 +38,23 @@ app.get("/", async (req, res) => {
 });
 
 //function to connect to mongodb
-const connectDB = () => {
-  mongoose.set("strictQuery", true);
-  mongoose
-    .connect(process.env.MONGODB_URL)
-    .then(() => console.log("MongoDB connected"))
-    .catch((error) => {
-      console.error("Failed to connect to DB");
+const connectDB = async( ) => {
+  try{
+    console.log("[]####mongourl", process.env.MONGODB_URL)
+    mongoose.set("strictQuery", true);
+    await mongoose.connect(process.env.MONGODB_URL)
+    console.log("MongoDB connected")
+  } catch(error){
+    console.error("Failed to connect to DB");
       console.log(error);
-    });
+  }
 };
 
 //Start the server
 const startServer = async () => {
   try {
-    connectDB();
-    app.listen(8080, () => console.log("Server started on port 8080"));
+    await connectDB();
+    app.listen(process.env.PORT, () => console.log(`Server started on port ${process.env.PORT}`));
   } catch (error) {
     console.log(error);
   }

@@ -81,10 +81,22 @@ const Home = () => {
             <ImageCard 
                 item={item}
             />
-            {/* <ImageCard/>
-            <ImageCard/>
-            <ImageCard/>
-            <ImageCard/> */}
+            <ImageCard 
+                item={item}
+            />
+            <ImageCard 
+                item={item}
+            />
+            <ImageCard 
+                item={item}
+            />
+            <ImageCard 
+                item={item}
+            />
+            <ImageCard 
+                item={item}
+            />
+            
 
             </CardWrapper>
         </Wrapper>
