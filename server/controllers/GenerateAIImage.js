@@ -1,33 +1,53 @@
+import axios from 'axios';
 import * as dotenv from "dotenv";
 import { createError } from "../error.js";
-import OpenAI from "openai";
-
 
 dotenv.config();
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-  });
+//Generating image using Stability AI
+export const generateImage = async (req, res, next) => {
+  try{
+    const { prompt } = req.body;
 
-//Controller to generate Image
-//DALLE model of openAI
-export const generateImage = async(req, res, next) =>{
-    try{
-        const {prompt1} = req.body;
-        const prompt=JSON.stringify(prompt1)
-        console.log("[][] prompt", prompt)
-        const response = await openai.images.generate({
-            model: "dall-e-2",
-            prompt,
-            n: 1,
-            size: "1024x1024",
-            response_format : "b64_json"
-        });
-        const generatedImage = response.data.data[0].b64_json;
-        return res.status(200).json({
-            photo: generatedImage
-        });
-    }catch (error) {
+    if (!prompt) {
+      return res.status(400).json({ error: 'Prompt is required' });
+    }
+
+    console.log("[]############ prompt : ", prompt)
+
+    const response = await axios.post(
+      'https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/text-to-image',
+      {
+        text_prompts: [
+          {
+            text: prompt,
+          },
+        ],
+        cfg_scale: 7,
+        width: 1024,
+        height: 1024,
+        samples: 1,
+        steps: 30,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.STABILITYAI_API_KEY}`,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    const base64Image = `data:image/png;base64,${response.data.artifacts[0].base64}`;
+
+    console.log("[]****** BASE64 image : ", base64Image);
+
+    return res.status(200).json({
+        photo: base64Image
+    });
+  } catch (error) {
+    console.error('Error generating image:', error.response?.data || error.message);
+
     next(
       createError(
         error.status,
@@ -35,4 +55,4 @@ export const generateImage = async(req, res, next) =>{
       )
     );
   }
-}
+};

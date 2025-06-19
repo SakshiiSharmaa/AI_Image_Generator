@@ -28,7 +28,7 @@ app.use((err, req, res, next) => {
 });
 
 app.use("/api/post", PostRouter);
-app.use("/api/generateImage", GenerateImageRouter);
+app.use('/api/generateImage', GenerateImageRouter);
 
 //Default GET
 app.get("/", async (req, res) => {
