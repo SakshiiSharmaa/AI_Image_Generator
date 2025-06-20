@@ -13,8 +13,6 @@ export const generateImage = async (req, res, next) => {
       return res.status(400).json({ error: 'Prompt is required' });
     }
 
-    console.log("[]############ prompt : ", prompt)
-
     const response = await axios.post(
       'https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/text-to-image',
       {
@@ -39,8 +37,6 @@ export const generateImage = async (req, res, next) => {
     );
 
     const base64Image = `data:image/png;base64,${response.data.artifacts[0].base64}`;
-
-    console.log("[]****** BASE64 image : ", base64Image);
 
     return res.status(200).json({
         photo: base64Image

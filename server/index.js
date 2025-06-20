@@ -40,7 +40,6 @@ app.get("/", async (req, res) => {
 //function to connect to mongodb
 const connectDB = async( ) => {
   try{
-    console.log("[]####mongourl", process.env.MONGODB_URL)
     mongoose.set("strictQuery", true);
     await mongoose.connect(process.env.MONGODB_URL)
     console.log("MongoDB connected")

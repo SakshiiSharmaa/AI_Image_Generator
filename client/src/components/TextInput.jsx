@@ -47,7 +47,7 @@ const TextInput = ({
   placeholder,
   name,
   value,
-  handelChange,
+  handleChange,
   textArea,
   rows,
   columns,
@@ -63,7 +63,7 @@ const TextInput = ({
           columns={columns}
           placeholder={placeholder}
           value={value}
-          onChange={(e) => handelChange(e)}
+          onChange={(e) => handleChange(e)}
         />
       </OutlinedInput>
     </Container>

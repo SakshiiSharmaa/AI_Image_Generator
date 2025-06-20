@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import {AddRounded, ExploreRounded} from "@mui/icons-material"
 import Button from './button'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
 flex: 1;
@@ -22,11 +22,12 @@ box-shadow: 0 0 10px rgba(0,0,0,0.15);
 
 const Navbar = () => {
     const navigate = useNavigate();
-
+    const location = useLocation();
+  const path = location.pathname.split("/");
   return (
     <Container>
         GENAI
-        {navigate[1] === "post"? (
+        {path[1] === "post"? (
             <Button 
                 text="Explore Posts" 
                 leftIcon={<ExploreRounded style={{fontSize: "18px"}}/>} 

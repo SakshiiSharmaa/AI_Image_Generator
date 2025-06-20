@@ -73,9 +73,9 @@ const ImageCard = ({item}) => {
                 justifyContent: "space-between",
             }}>
             <Author>
-                <Avatar sx={{width: "32px", height: '32px'}} >{item?.author[0]}</Avatar>
+                <Avatar sx={{width: "32px", height: '32px'}} >{item?.name?.[0] || 'A'}</Avatar>
             
-                {item?.author}
+                {item?.name || 'Anonymous'}
             </Author>
             <DownloadRounded onClick ={() => FileSaver.saveAs(item?.photo,"download.jpg")}/>
             </div>

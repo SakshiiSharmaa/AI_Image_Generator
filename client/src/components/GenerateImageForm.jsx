@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from './button';
 import TextInput from './TextInput';
 import { AutoAwesome, CreateRounded } from '@mui/icons-material';
-
+import { CreatePost, GenerateAIImage } from '../api';
+import {useNavigate} from 'react-router-dom'
 const Form = styled.div`
   flex: 1;
   padding: 16px 20px;
@@ -49,12 +50,30 @@ const GenerateImageForm = ({
   generateImageLoading,
   setGenerateImageLoading,
 }) => {
-
-    const generateImage = () =>{
+    const [error, setError] = useState("");
+    const navigate= useNavigate();
+    const generateImage = async () =>{
         setGenerateImageLoading(true);
+        await GenerateAIImage({prompt :post.prompt()})
+        .then((res)=>{
+          setPost({...post, photo:res?.data?.photo});
+          setGenerateImageLoading(false);
+        }).catch(error =>{
+          setError(error?.response?.data?.message);
+          setGenerateImageLoading(false)
+        })
     }
-    const createPost = () =>{
-        setCreatePostLoading(true);
+    const createPost = async () =>{
+      setCreatePostLoading(true);
+      await CreatePost(post)
+        .then((res)=>{
+          setCreatePostLoading(false);
+          navigate("/");
+        }).catch(error =>{
+          setError(error?.response?.data?.message);
+          setCreatePostLoading(false);
+        })
+     
     }
   return (
     <Form>
@@ -62,7 +81,7 @@ const GenerateImageForm = ({
         <Title>Generate Image with prompt</Title>
         <Desc>
           {' '}
-          Write your promt according to the image you want to generate!
+          Write your prompt according to the image you want to generate!
         </Desc>
       </Top>
       <Body>
@@ -71,7 +90,11 @@ const GenerateImageForm = ({
           placeholder="Enter your name"
           name="name"
           value={post.name}
-          handleChange={(e) => setPost({ ...post, promt: e.target.value })}
+          handleChange={(e) => {
+            setPost({ ...post, name: e.target.value });
+          }
+            
+            }
         />
         <TextInput
           label="Image Prompt"
@@ -80,8 +103,9 @@ const GenerateImageForm = ({
           rows="8"
           textArea
           value={post.prompt}
-          handleChange={(e) => setPost({ ...post, promt: e.target.value })}
+          handleChange={(e) => setPost({ ...post, prompt: e.target.value })}
         />
+        {error && <div style={{ color :"red"}}>{error}</div>}
         ** You can post the AI generated image to the Community **
       </Body>
       <Actions>
