@@ -1,4 +1,55 @@
-npx create-react-app client
 
-Symbols: https://www.symbolspy.com/
-Reference: https://github.com/rishavchanda/IMAGE_GENERATOR/blob/master/client/src/pages/Home.jsx
+The project uses <b>MERN</b> stack to generate images based on user's text prompt. The images are generated via <b>Stability AI</b>, which provides high-quality image generation services and a robust set of APIs for developers to build best-in-class image applications.
+
+<h4>
+    <b>🧑‍💻 Tech Stack: </b  MongoDB, Express, React.js, Node.js
+</h4>
+
+<h4>
+    📦 Dependencies
+</h4>
+
+<table>
+    <caption>
+        <strong>Frontend Key Dependencies</strong>
+    </caption>
+    <thead>
+        <tr>
+            <th>Package</th>
+            <th>Description</th> 
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <code>styled-components</code>
+            </td>
+            <td>
+                To utilise tagged template literals to style the components.
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <code>file-saver</code>
+            </td>
+            <td>
+                To save AI generated image file on the client-side.
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <code>Material UI</code>
+            </td>
+            <td>
+                For building user interfaces, including icons, themes, and components.
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h4>
+    🔗 Resources
+</h4>
+<li>
+    <b>Reference Implementation:</b> <a href="https://github.com/rishavchanda/IMAGE_GENERATOR/blob/master/client/src/pages/Home.jsx" target="_blank">GitHub - rishavchanda/IMAGE_GENERATOR </>
+</link>

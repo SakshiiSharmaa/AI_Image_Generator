@@ -15,7 +15,7 @@ const PostSchema = new mongoose.Schema({
   },
 });
 
-//to create a model/collection Post with structre defined in POstSchema
+// To create a model/collection Post with structure defined in PostSchema
 const Post = mongoose.model("Post", PostSchema);
 
 export default Post;

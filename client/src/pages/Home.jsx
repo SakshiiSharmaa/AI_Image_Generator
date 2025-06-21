@@ -1,9 +1,9 @@
-import styled from 'styled-components';
-import SearchBar from '../components/SearchBar';
-import ImageCard from '../components/ImageCard';
-import { useEffect, useState } from 'react';
-import { CircularProgress } from '@mui/material';
-import {GetPosts} from '../api/index.js'
+import styled from "styled-components";
+import SearchBar from "../components/SearchBar";
+import ImageCard from "../components/ImageCard";
+import { useEffect, useState } from "react";
+import { CircularProgress } from "@mui/material";
+import { GetPosts } from "../api/index.js";
 
 const Container = styled.div`
   height: 100%;
@@ -66,50 +66,46 @@ const CardWrapper = styled.div`
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [search, setSearch] = useState('');
+  const [error, setError] = useState("");
+  const [search, setSearch] = useState("");
   const [filteredPosts, setFilteredPosts] = useState([]);
 
-  const getPosts =async ()=>{
+  const getPosts = async () => {
     setLoading(true);
-    await GetPosts().then((res)=>{
+    await GetPosts()
+      .then((res) => {
         setLoading(false);
         setPosts(res?.data?.data);
         setFilteredPosts(res?.data?.data);
-    })
-    .catch((error)=>{
+      })
+      .catch((error) => {
         setError(error?.response?.data?.message);
         setLoading(false);
-    })
-  }
+      });
+  };
 
-  useEffect(()=>{
+  // Get post list on mount
+  useEffect(() => {
     getPosts();
-  },[]);
+  }, []);
 
-  //Search
-  useEffect(()=>{
-    if(!search){
-        setFilteredPosts(posts);
+  // Reload posts if search condition is changed or there are changes in the post list
+  useEffect(() => {
+    if (!search) {
+      setFilteredPosts(posts);
+    } else {
+      const searchFilterdPosts = posts.filter((post) => {
+        const promptMatch = post?.prompt
+          ?.toLowerCase()
+          .includes(search.toString().toLowerCase());
+        const authorMatch = post?.name
+          ?.toLowerCase()
+          .includes(search.toString().toLowerCase());
+        return promptMatch || authorMatch;
+      });
+      setFilteredPosts(searchFilterdPosts);
     }
-    // const searchFilterdPosts = posts.filter((post)=>{
-    //     const promptMatch = post?.prompt?.toLowerCase().includes(search.toString().toLowerCase());
-    //     const authorMatch = post?.name?.toLowerCase().includes(search.toString().toLowerCase());
-    //     return promptMatch || authorMatch;
-    // });
-    // if(search){
-    //     setFilteredPosts(searchFilterdPosts);
-    // }
-    else{
-        const searchFilterdPosts = posts.filter((post)=>{
-            const promptMatch = post?.prompt?.toLowerCase().includes(search.toString().toLowerCase());
-            const authorMatch = post?.name?.toLowerCase().includes(search.toString().toLowerCase());
-            return promptMatch || authorMatch;
-        });
-        setFilteredPosts(searchFilterdPosts);
-    }
-
-  },[posts, search]);
+  }, [posts, search]);
 
   return (
     <Container>
@@ -120,26 +116,25 @@ const Home = () => {
       <SearchBar search={search} setSearch={setSearch} />
 
       <Wrapper>
-        {error && <div style={{color: 'red'}}>{error}</div>}
-        {loading? (
-            <CircularProgress/>
-        ):
-        <CardWrapper>
-          {filteredPosts.length === 0 ? (
-            <>No Posts Found</>
-          ) : (
-            <>
-              {filteredPosts
-                .slice()
-                .reverse()
-                .map((item, index) => (
-                  <ImageCard key={index} item={item} />
-                ))}
-            </>
-          )}
-        </CardWrapper>
-        }
-        
+        {error && <div style={{ color: "red" }}>{error}</div>}
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <CardWrapper>
+            {filteredPosts.length === 0 ? (
+              <>No Posts Found</>
+            ) : (
+              <>
+                {filteredPosts
+                  .slice() // to create a shallow copy of the filteredPOsts array
+                  .reverse() // to get the latest posts first
+                  .map((item, index) => (
+                    <ImageCard key={index} item={item} />
+                  ))}
+              </>
+            )}
+          </CardWrapper>
+        )}
       </Wrapper>
     </Container>
   );

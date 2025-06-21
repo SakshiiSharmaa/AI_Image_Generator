@@ -1,12 +1,12 @@
 // cors is for security purpose and origin access
 import cors from "cors";
-//mongodb access
+// mongodb access
 import mongoose from "mongoose";
-//maintaining secret in env
+// maintaining secret in env
 import * as dotenv from "dotenv";
 import express from "express";
 import PostRouter from "./routes/Posts.js";
-import GenerateImageRouter from "./routes/GenerateImage.js"
+import GenerateImageRouter from "./routes/GenerateImage.js";
 
 dotenv.config();
 
@@ -28,32 +28,34 @@ app.use((err, req, res, next) => {
 });
 
 app.use("/api/post", PostRouter);
-app.use('/api/generateImage', GenerateImageRouter);
+app.use("/api/generateImage", GenerateImageRouter);
 
-//Default GET
+// Default GET
 app.get("/", async (req, res) => {
   res.status(200).json({
     message: "Hello Devlopers!",
   });
 });
 
-//function to connect to mongodb
-const connectDB = async( ) => {
-  try{
+// To connect to mongodb
+const connectDB = async () => {
+  try {
     mongoose.set("strictQuery", true);
-    await mongoose.connect(process.env.MONGODB_URL)
-    console.log("MongoDB connected")
-  } catch(error){
+    await mongoose.connect(process.env.MONGODB_URL);
+    console.log("MongoDB connected");
+  } catch (error) {
     console.error("Failed to connect to DB");
-      console.log(error);
+    console.log(error);
   }
 };
 
-//Start the server
+// Start the server
 const startServer = async () => {
   try {
     await connectDB();
-    app.listen(process.env.PORT, () => console.log(`Server started on port ${process.env.PORT}`));
+    app.listen(process.env.PORT, () =>
+      console.log(`Server started on port ${process.env.PORT}`)
+    );
   } catch (error) {
     console.log(error);
   }
