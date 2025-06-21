@@ -19,7 +19,7 @@ const SearchBar = ({search, setSearch}) => {
     <SearchBarContainer>
         <SearchOutlined/>
         <input
-            placeholder='Search with '
+            placeholder='Search with author or prompt '
             style={{ 
                 border: 'none', 
                 outline: 'none',
