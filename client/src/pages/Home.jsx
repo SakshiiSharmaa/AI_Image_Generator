@@ -74,6 +74,7 @@ const Home = () => {
     setLoading(true);
     await GetPosts()
       .then((res) => {
+        console.log("[]posts",res);
         setLoading(false);
         setPosts(res?.data?.data);
         setFilteredPosts(res?.data?.data);
@@ -121,7 +122,7 @@ const Home = () => {
           <CircularProgress />
         ) : (
           <CardWrapper>
-            {filteredPosts?.length === 0 ? (
+            {!fileredPosts || filteredPosts?.length === 0 ? (
               <>No Posts Found</>
             ) : (
               <>
