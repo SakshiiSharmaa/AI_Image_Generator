@@ -1,6 +1,9 @@
 import axios from "axios";
+
+const isDev = window.location.hostname === "localhost";
+const serverUrl = isDev? 'http://localhost:8080/api' : import.meta.env.SERVER_API_BASE_URL;
 const API= axios.create({
-    baseURL: `http://localhost:8080/api`
+    baseURL: serverUrl
 })
 
 export const GetPosts = async ()=> await API.get("/post/");
