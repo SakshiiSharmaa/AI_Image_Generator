@@ -121,7 +121,7 @@ const Home = () => {
           <CircularProgress />
         ) : (
           <CardWrapper>
-            {filteredPosts.length === 0 ? (
+            {filteredPosts?.length === 0 ? (
               <>No Posts Found</>
             ) : (
               <>
