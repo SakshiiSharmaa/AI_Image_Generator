@@ -122,7 +122,7 @@ const Home = () => {
           <CircularProgress />
         ) : (
           <CardWrapper>
-            {!fileredPosts || filteredPosts?.length === 0 ? (
+            {!filteredPosts || filteredPosts?.length === 0 ? (
               <>No Posts Found</>
             ) : (
               <>
